@@ -3,6 +3,7 @@ package com.xxmassdeveloper.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,57 +56,110 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         mSeekBarY.setOnSeekBarChangeListener(this);
 
         mChart = (BarChart) findViewById(R.id.chart1);
-        mChart.setOnChartValueSelectedListener(this);
-        mChart.getDescription().setEnabled(false);
+//        mChart.setOnChartValueSelectedListener(this);
+//        mChart.getDescription().setEnabled(false);
 
 //        mChart.setDrawBorders(true);
 
         // scaling can now only be done on x- and y-axis separately
+//        mChart.setPinchZoom(false);
+//
+//        mChart.setDrawBarShadow(false);
+//
+//        mChart.setDrawGridBackground(false);
+//
+//        // create a custom MarkerView (extend MarkerView) and specify the layout
+//        // to use for it
+//        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+//        mv.setChartView(mChart); // For bounds control
+//        mChart.setMarker(mv); // Set the marker to the chart
+//
+//        mSeekBarX.setProgress(10);
+//        mSeekBarY.setProgress(100);
+//
+//        Legend l = mChart.getLegend();
+//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+//        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+//        l.setDrawInside(true);
+//        l.setTypeface(mTfLight);
+//        l.setYOffset(0f);
+//        l.setXOffset(10f);
+//        l.setYEntrySpace(0f);
+//        l.setTextSize(8f);
+//
+//        XAxis xAxis = mChart.getXAxis();
+//        xAxis.setTypeface(mTfLight);
+//        xAxis.setGranularity(1f);
+//        xAxis.setCenterAxisLabels(true);
+//        xAxis.setValueFormatter(new IAxisValueFormatter() {
+//            @Override
+//            public String getFormattedValue(float value, AxisBase axis) {
+//                return String.valueOf((int) value);
+//            }
+//        });
+//
+//        YAxis leftAxis = mChart.getAxisLeft();
+//        leftAxis.setTypeface(mTfLight);
+//        leftAxis.setValueFormatter(new LargeValueFormatter());
+//        leftAxis.setDrawGridLines(false);
+//        leftAxis.setSpaceTop(35f);
+//        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+//
+//        mChart.getAxisRight().setEnabled(false);
+
         mChart.setPinchZoom(false);
-
-        mChart.setDrawBarShadow(false);
-
+        mChart.setScaleEnabled(false);
+        mChart.setDoubleTapToZoomEnabled(false);
         mChart.setDrawGridBackground(false);
-
-        // create a custom MarkerView (extend MarkerView) and specify the layout
-        // to use for it
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-        mv.setChartView(mChart); // For bounds control
-        mChart.setMarker(mv); // Set the marker to the chart
-
-        mSeekBarX.setProgress(10);
-        mSeekBarY.setProgress(100);
-
-        Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(true);
-        l.setTypeface(mTfLight);
-        l.setYOffset(0f);
-        l.setXOffset(10f);
-        l.setYEntrySpace(0f);
-        l.setTextSize(8f);
+        mChart.setDragEnabled(true);
+        //todo change no data text
+        mChart.setNoDataText("No data");
+        mChart.getLegend().setEnabled(false);
+        mChart.setDragOffsetX(25f);
+        mChart.getDescription().setEnabled(false);
+        mChart.getDescription().setText("");
+        mChart.getAxisRight().setDrawLabels(false);
+        mChart.getAxisRight().setEnabled(false);
 
         XAxis xAxis = mChart.getXAxis();
-        xAxis.setTypeface(mTfLight);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
+        xAxis.setDrawGridLines(false);
+        //todo change line color
+        xAxis.setAxisLineColor(Color.GRAY);
         xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return String.valueOf((int) value);
-            }
-        });
+        //xAxis.setYOffset(10f);
 
         YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setTypeface(mTfLight);
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setGranularity(3.33f);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(10f);
+        leftAxis.mAxisRange = 10f;
+        leftAxis.setLabelCount(3);
+        leftAxis.setValueFormatter((value, axis) -> {
+            if (value == 3.33f) return "Improve";
+            if (value == 6.66f) return "Reflect";
+            if (value == 9.99f) return "Maintain";
+            return "";
+        });
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setCenterAxisLabels(true);
+        leftAxis.setYOffset(35f);
+        leftAxis.setXOffset(25f);
 
-        mChart.getAxisRight().setEnabled(false);
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(1, 2f));
+        entries.add(new BarEntry(2, 4f));
+        entries.add(new BarEntry(3, 8f));
+        entries.add(new BarEntry(21, 1f));
+        entries.add(new BarEntry(30, 3f));
+
+        BarDataSet barDataSet = new BarDataSet(entries, "dfff");
+
+        BarData barData = new BarData(barDataSet);
+
+        mChart.setData(barData);
     }
 
     @Override
