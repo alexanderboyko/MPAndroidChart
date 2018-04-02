@@ -57,7 +57,7 @@ public class YAxisRenderer extends AxisRenderer {
         mAxisLabelPaint.setColor(mYAxis.getTextColor());
 
         float xoffset = mYAxis.getXOffset();
-        float yoffset = Utils.calcTextHeight(mAxisLabelPaint, "A") / 2.5f + mYAxis.getYOffset();
+        float yoffset = Utils.calcTextHeight(mAxisLabelPaint, "A");
 
         AxisDependency dependency = mYAxis.getAxisDependency();
         YAxisLabelPosition labelPosition = mYAxis.getLabelPosition();
@@ -112,19 +112,23 @@ public class YAxisRenderer extends AxisRenderer {
      * @param fixedPosition
      * @param positions
      */
-    protected void drawYLabels(Canvas c, float fixedPosition, float[] positions, float offset) {
+    protected void drawYLabels(Canvas c, float fixedPosition, float[] positions, float textHeight) {
 
         final int from = mYAxis.isDrawBottomYLabelEntryEnabled() ? 0 : 1;
         final int to = mYAxis.isDrawTopYLabelEntryEnabled()
                 ? mYAxis.mEntryCount
                 : (mYAxis.mEntryCount - 1);
 
+        float yCenterOffset = 0;
+
+        if (to > 1) {
+            yCenterOffset = (positions[1] - positions[3]) / 2;
+        }
         // draw
         for (int i = from; i < to; i++) {
-
             String text = mYAxis.getFormattedLabel(i);
 
-            c.drawText(text, fixedPosition, positions[i * 2 + 1] + offset, mAxisLabelPaint);
+            c.drawText(text, fixedPosition, positions[i * 2 + 1] + yCenterOffset + textHeight, mAxisLabelPaint);
         }
     }
 
