@@ -251,6 +251,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         mXAxisRenderer.renderAxisLabels(canvas);
         mAxisRendererLeft.renderAxisLabels(canvas);
+        mAxisRendererLeft.renderLabelsGrid(canvas);
         mAxisRendererRight.renderAxisLabels(canvas);
 
         if (isClipValuesToContentEnabled()) {
@@ -506,14 +507,16 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
             mViewPortHandler.restrainViewPort(
                     Math.max(minOffset, offsetLeft),
                     Math.max(minOffset, offsetTop),
-                    Math.max(minOffset, offsetRight),
+                    //Math.max(minOffset, offsetRight),
+                    //remove right chart padding
+                    0,
                     Math.max(minOffset, offsetBottom));
 
-            if (mLogEnabled) {
-                Log.i(LOG_TAG, "offsetLeft: " + offsetLeft + ", offsetTop: " + offsetTop
-                        + ", offsetRight: " + offsetRight + ", offsetBottom: " + offsetBottom);
-                Log.i(LOG_TAG, "Content: " + mViewPortHandler.getContentRect().toString());
-            }
+            //if (mLogEnabled) {
+            Log.d(LOG_TAG, "offsetLeft: " + offsetLeft + ", offsetTop: " + offsetTop
+                    + ", offsetRight: " + offsetRight + ", offsetBottom: " + offsetBottom);
+            Log.i(LOG_TAG, "Content: " + mViewPortHandler.getContentRect().toString());
+            //}
         }
 
         prepareOffsetMatrix();
@@ -1224,7 +1227,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
     /**
      * When enabled, the values will be clipped to contentRect,
-     *   otherwise they can bleed outside the content rect.
+     * otherwise they can bleed outside the content rect.
      *
      * @param enabled
      */
@@ -1234,7 +1237,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
     /**
      * When enabled, the values will be clipped to contentRect,
-     *   otherwise they can bleed outside the content rect.
+     * otherwise they can bleed outside the content rect.
      *
      * @return
      */

@@ -337,6 +337,11 @@ public class XAxisRenderer extends AxisRenderer {
         }
     }
 
+    @Override
+    public void renderLabelsGrid(Canvas c) {
+        //doesn't need in XAxis
+    }
+
     float[] mLimitLineSegmentsBuffer = new float[4];
     private Path mLimitLinePath = new Path();
 

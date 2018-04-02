@@ -67,8 +67,8 @@ public class YAxisRenderer extends AxisRenderer {
         if (dependency == AxisDependency.LEFT) {
 
             if (labelPosition == YAxisLabelPosition.OUTSIDE_CHART) {
-                mAxisLabelPaint.setTextAlign(Align.RIGHT);
-                xPos = mViewPortHandler.offsetLeft() - xoffset;
+                mAxisLabelPaint.setTextAlign(Align.LEFT);
+                xPos = xoffset;
             } else {
                 mAxisLabelPaint.setTextAlign(Align.LEFT);
                 xPos = mViewPortHandler.offsetLeft() + xoffset;
@@ -132,6 +132,20 @@ public class YAxisRenderer extends AxisRenderer {
         }
     }
 
+    @Override
+    public void renderLabelsGrid(Canvas c) {
+        Path path = new Path();
+
+        path.moveTo(0, mViewPortHandler.offsetTop());
+        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.offsetTop());
+        c.drawPath(path, mGridPaint);
+        path.reset();
+
+        path.moveTo(0, mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom());
+        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom());
+        c.drawPath(path, mGridPaint);
+    }
+
     protected Path mRenderGridLinesPath = new Path();
 
     @Override
@@ -143,6 +157,7 @@ public class YAxisRenderer extends AxisRenderer {
         if (mYAxis.isDrawGridLinesEnabled()) {
 
             int clipRestoreCount = c.save();
+
             c.clipRect(getGridClippingRect());
 
             float[] positions = getTransformedPositions();
@@ -153,11 +168,9 @@ public class YAxisRenderer extends AxisRenderer {
 
             Path gridLinePath = mRenderGridLinesPath;
             gridLinePath.reset();
-
             // draw the grid
             for (int i = 0; i < positions.length; i += 2) {
-
-                // draw a path because lines don't support dashing on lower android versions
+                mGridPaint.setColor(mYAxis.getGridColor());
                 c.drawPath(linePath(gridLinePath, i, positions), mGridPaint);
                 gridLinePath.reset();
             }
