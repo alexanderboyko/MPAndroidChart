@@ -226,7 +226,6 @@ public class XAxisRenderer extends AxisRenderer {
                     }
                 }
 
-                Log.d("DRAW LABEL", "label: " + label + " x = " + x + " y = " + pos);
                 drawLabel(c, label, x, pos, anchor, labelRotationAngleDegrees, false);
             }
         }

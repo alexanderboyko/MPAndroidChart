@@ -25,6 +25,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
@@ -120,6 +121,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         mChart.animateY(400);
         mChart.setHighlightFullBarEnabled(false);
 
+
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
@@ -152,17 +154,46 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         leftAxis.setXOffset(25f);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(1, 2f));
-        entries.add(new BarEntry(2, 4f));
-        entries.add(new BarEntry(3, 8f));
-        entries.add(new BarEntry(21, 1f));
-        entries.add(new BarEntry(30, 3f));
+        ArrayList<BarEntry> entries1 = new ArrayList<>();
+        ArrayList<BarEntry> entries2 = new ArrayList<>();
+
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < 30; i++) {
+            entries.add(new BarEntry(i, random.nextInt(10)));
+            entries1.add(new BarEntry(i, random.nextInt(10)));
+            entries2.add(new BarEntry(i, random.nextInt(10)));
+        }
 
         BarDataSet barDataSet = new BarDataSet(entries, "dfff");
         barDataSet.setHighlightEnabled(false);
-        BarData barData = new BarData(barDataSet);
+        barDataSet.setColor(Color.RED);
+        BarDataSet barDataSet1 = new BarDataSet(entries1, "dfff1");
+        barDataSet1.setHighlightEnabled(false);
+        barDataSet1.setColor(Color.BLUE);
+        BarDataSet barDataSet2 = new BarDataSet(entries2, "dfff2");
+        barDataSet2.setHighlightEnabled(false);
+        barDataSet2.setColor(Color.GREEN);
+
+        BarData barData = new BarData(barDataSet, barDataSet1, barDataSet2);
 
         mChart.setData(barData);
+
+        float groupSpace = 0.01f;
+        float barSpace = 0.03f; // x3 DataSet
+        float barWidth = 0.3f; // x3 DataSet
+
+        mChart.getBarData().groupBars(0, groupSpace, barSpace);
+        mChart.getBarData().setBarWidth(barWidth);
+
+        //mChart.getXAxis().setAxisMinimum(0);
+        //mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
+
+        mChart.notifyDataSetChanged();
+
+        mChart.setVisibleXRange(5f, 5f);
+        mChart.setVisibleYRangeMinimum(10f, YAxis.AxisDependency.LEFT);
+        mChart.setVisibleYRangeMaximum(10f, YAxis.AxisDependency.LEFT);
+        mChart.invalidate();
     }
 
     @Override

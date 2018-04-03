@@ -557,7 +557,6 @@ public abstract class Utils {
     public static void drawXAxisValue(Canvas c, String text, float x, float y,
                                       Paint paint,
                                       MPPointF anchor, float angleDegrees, boolean isDate) {
-        Log.d("XOffset", text);
         float drawOffsetX = 0.f;
         float drawOffsetY = 0.f;
 
@@ -566,7 +565,6 @@ public abstract class Utils {
 
         // Android sometimes has pre-padding
         drawOffsetX -= mDrawTextRectBuffer.left;
-        Log.d("XOffset", " " + drawOffsetX);
         // Android does not snap the bounds to line boundaries,
         //  and draws from bottom to top.
         // And we want to normalize it.
@@ -580,7 +578,6 @@ public abstract class Utils {
 
             // Move the text drawing rect in a way that it always rotates around its center
             drawOffsetX -= mDrawTextRectBuffer.width() * 0.5f;
-            Log.d("XOffset", " " + drawOffsetX);
             drawOffsetY -= lineHeight * 0.5f;
 
             float translateX = x;
@@ -609,12 +606,10 @@ public abstract class Utils {
             if (anchor.x != 0.f || anchor.y != 0.f) {
 
                 drawOffsetX -= mDrawTextRectBuffer.width() * anchor.x;
-                Log.d("XOffset", " " + drawOffsetX);
                 drawOffsetY -= lineHeight * anchor.y;
             }
 
             drawOffsetX += x;
-            Log.d("XOffset", " " + drawOffsetX);
             drawOffsetY += y;
 
             c.drawText(text, isDate ? x : drawOffsetX, drawOffsetY, paint);
