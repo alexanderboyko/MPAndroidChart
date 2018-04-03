@@ -4,6 +4,8 @@ package com.github.mikephil.charting.renderer;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -444,8 +446,8 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
             Transformer trans = mChart.getTransformer(set.getAxisDependency());
 
-            mHighlightPaint.setColor(set.getHighLightColor());
-            mHighlightPaint.setAlpha(set.getHighLightAlpha());
+            mHighlightPaint.setColor(Color.parseColor("#c6c6c6"));
+            //mHighlightPaint.setAlpha(set.getHighLightAlpha());
 
             boolean isStack = (high.getStackIndex() >= 0 && e.isStacked()) ? true : false;
 
@@ -476,7 +478,8 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
             setHighlightDrawPos(high, mBarRect);
 
-            c.drawRect(mBarRect, mHighlightPaint);
+            drawRoundedRect(c, mHighlightPaint, mBarRect);
+            //c.drawRect(mBarRect, mHighlightPaint);
         }
     }
 

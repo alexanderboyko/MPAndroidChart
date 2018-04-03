@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -107,13 +108,13 @@ public class XAxisRenderer extends AxisRenderer {
         if (!mXAxis.isEnabled() || !mXAxis.isDrawLabelsEnabled())
             return;
 
-        float yoffset = mXAxis.getYOffset();
+        float yoffset = mXAxis.getYOffset() / 2;
 
         mAxisLabelPaint.setTypeface(mXAxis.getTypeface());
         mAxisLabelPaint.setTextSize(mXAxis.getTextSize());
         mAxisLabelPaint.setColor(mXAxis.getTextColor());
 
-        MPPointF pointF = MPPointF.getInstance(0,0);
+        MPPointF pointF = MPPointF.getInstance(0, 0);
         if (mXAxis.getPosition() == XAxisPosition.TOP) {
             pointF.x = 0.5f;
             pointF.y = 1.0f;
@@ -196,6 +197,9 @@ public class XAxisRenderer extends AxisRenderer {
 
         mTrans.pointValuesToPixel(positions);
 
+        //drawLabel(c, "Apr 2018", 0, 0, anchor, labelRotationAngleDegrees);
+        drawDate(c, anchor, labelRotationAngleDegrees, pos);
+
         for (int i = 0; i < positions.length; i += 2) {
 
             float x = positions[i];
@@ -222,16 +226,27 @@ public class XAxisRenderer extends AxisRenderer {
                     }
                 }
 
-                drawLabel(c, label, x, pos, anchor, labelRotationAngleDegrees);
+                Log.d("DRAW LABEL", "label: " + label + " x = " + x + " y = " + pos);
+                drawLabel(c, label, x, pos, anchor, labelRotationAngleDegrees, false);
             }
         }
     }
 
-    protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
-        Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees);
+    protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees, boolean isDate) {
+        Utils.drawXAxisValue(c, formattedLabel, x, y, mAxisLabelPaint, anchor, angleDegrees, isDate);
     }
+
+    private void drawDate(Canvas c, MPPointF mpPointF, float angle, float y) {
+        String date = mXAxis.getDate();
+
+        float x = (mViewPortHandler.contentLeft() / 2) - (Utils.calcTextWidth(mAxisLabelPaint, date) / 2);
+
+        drawLabel(c, date, x, y, mpPointF, angle, true);
+    }
+
     protected Path mRenderGridLinesPath = new Path();
     protected float[] mRenderGridLinesBuffer = new float[2];
+
     @Override
     public void renderGridLines(Canvas c) {
 
@@ -241,7 +256,7 @@ public class XAxisRenderer extends AxisRenderer {
         int clipRestoreCount = c.save();
         c.clipRect(getGridClippingRect());
 
-        if(mRenderGridLinesBuffer.length != mAxis.mEntryCount * 2){
+        if (mRenderGridLinesBuffer.length != mAxis.mEntryCount * 2) {
             mRenderGridLinesBuffer = new float[mXAxis.mEntryCount * 2];
         }
         float[] positions = mRenderGridLinesBuffer;

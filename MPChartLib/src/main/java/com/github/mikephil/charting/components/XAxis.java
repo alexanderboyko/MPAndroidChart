@@ -12,6 +12,7 @@ import com.github.mikephil.charting.utils.Utils;
  */
 public class XAxis extends AxisBase {
 
+    private String date = "";
     /**
      * width of the x-axis labels in pixels - this is automatically
      * calculated by the computeSize() methods in the renderers
@@ -114,5 +115,13 @@ public class XAxis extends AxisBase {
      */
     public boolean isAvoidFirstLastClippingEnabled() {
         return mAvoidFirstLastClipping;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

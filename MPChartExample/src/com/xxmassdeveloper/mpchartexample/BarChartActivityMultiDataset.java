@@ -117,6 +117,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         mChart.getAxisRight().setDrawLabels(false);
         mChart.getAxisRight().setEnabled(false);
         mChart.setClipValuesToContent(false);
+        mChart.setHighlightFullBarEnabled(false);
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -125,7 +126,10 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         //todo change line color
         xAxis.setAxisLineColor(Color.GRAY);
         xAxis.setCenterAxisLabels(true);
-        //xAxis.setYOffset(10f);
+        xAxis.setYOffset(20f);
+        //todo set date dynamically
+        xAxis.setDate("Apr 2018");
+        //xAxis.setTextColor(Color.MAGENTA);
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setGranularity(3.33f);
@@ -154,7 +158,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         entries.add(new BarEntry(30, 3f));
 
         BarDataSet barDataSet = new BarDataSet(entries, "dfff");
-
+        barDataSet.setHighlightEnabled(false);
         BarData barData = new BarData(barDataSet);
 
         mChart.setData(barData);
