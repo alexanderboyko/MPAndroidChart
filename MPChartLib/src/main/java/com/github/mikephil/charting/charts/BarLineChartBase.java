@@ -512,11 +512,11 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                     0,
                     Math.max(minOffset, offsetBottom));
 
-            //if (mLogEnabled) {
+            if (mLogEnabled) {
             Log.d(LOG_TAG, "offsetLeft: " + offsetLeft + ", offsetTop: " + offsetTop
                     + ", offsetRight: " + offsetRight + ", offsetBottom: " + offsetBottom);
             Log.i(LOG_TAG, "Content: " + mViewPortHandler.getContentRect().toString());
-            //}
+            }
         }
 
         prepareOffsetMatrix();

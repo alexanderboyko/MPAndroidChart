@@ -116,6 +116,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         mChart.getDescription().setText("");
         mChart.getAxisRight().setDrawLabels(false);
         mChart.getAxisRight().setEnabled(false);
+        mChart.setClipValuesToContent(false);
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
