@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.YAxis;
@@ -125,8 +126,21 @@ public class YAxisRenderer extends AxisRenderer {
             yCenterOffset = (positions[1] - positions[3]) / 2;
         }
         // draw
-        for (int i = from; i < to; i++) {
+        Paint linesPaint = mGridPaint;
+        linesPaint.setColor(mYAxis.getmGridLabelsColor());
+
+        for (int i = from + 1; i < to - 1; i++) {
             String text = mYAxis.getFormattedLabel(i);
+
+            //Log.d("LINES", "position = " + positions[i * 2 + 1] + " top = " + mViewPortHandler.offsetTop() + " bottom = " + (mViewPortHandler.getContentRect().height()));
+
+            if ((positions[i * 2 + 1] > mViewPortHandler.offsetTop() + 5) && (positions[i * 2 + 1] < (mViewPortHandler.getContentRect().height() - 5))) {
+                //Log.d("LINES", "draw position = " + positions[i * 2 + 1]);
+                Path path = new Path();
+                path.moveTo(0, positions[i * 2 + 1]);
+                path.lineTo(mViewPortHandler.contentLeft(), positions[i * 2 + 1]);
+                c.drawPath(path, mGridPaint);
+            }
 
             c.drawText(text, fixedPosition, positions[i * 2 + 1] + yCenterOffset + textHeight, mAxisLabelPaint);
         }
@@ -135,14 +149,15 @@ public class YAxisRenderer extends AxisRenderer {
     @Override
     public void renderLabelsGrid(Canvas c) {
         Path path = new Path();
+        mGridPaint.setColor(mYAxis.getGridColor());
 
         path.moveTo(0, mViewPortHandler.offsetTop());
         path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.offsetTop());
         c.drawPath(path, mGridPaint);
         path.reset();
 
-        path.moveTo(0, mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom());
-        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom());
+        path.moveTo(0, mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom()/2 +1 );
+        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom()/2+1);
         c.drawPath(path, mGridPaint);
     }
 
