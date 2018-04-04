@@ -3,9 +3,12 @@ package com.xxmassdeveloper.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -23,6 +26,8 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase;
 
@@ -122,25 +127,68 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         mChart.setClipValuesToContent(false);
         mChart.animateY(400);
         mChart.setHighlightFullBarEnabled(false);
+        mChart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+                Log.d("DRAG", "onChartTranslate: " + dX + " " + dY);
+            }
+        });
 
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
-        //todo change line color
-        xAxis.setAxisLineColor(Color.GRAY);
         xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter((value, axis) -> String.valueOf(value));
-        xAxis.setYOffset(20f);
+        xAxis.setValueFormatter((value, axis) -> String.valueOf((int) value));
+        xAxis.setYOffset(30f);
         //todo set date dynamically
         xAxis.setDate("Apr 2018");
-        //xAxis.setTextColor(Color.MAGENTA);
+        xAxis.setTextSize(13f);
+        //xAxis.setTextColor(ContextCompat.getColor(this, R.color.textColorDarkSecondary));
+        //xAxis.setTypeface(ResourcesCompat.getFont(this, R.font.serifa_std_light));
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setGranularity(3.33f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setAxisMaximum(10f);
+        leftAxis.setTextSize(12f);
+        //leftAxis.setTypeface(ResourcesCompat.getFont(this, R.font.serifa_std_light));
         leftAxis.mAxisRange = 10f;
         leftAxis.setLabelCount(3);
         leftAxis.setValueFormatter((value, axis) -> {
@@ -150,10 +198,11 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
             return "";
         });
         leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(Color.BLACK);
-        leftAxis.setAxisLineColor(Color.BLACK);
+        //leftAxis.setAxisLineColor(ContextCompat.getColor(this, R.color.chartGridColor));
+        //leftAxis.setGridColor(ContextCompat.getColor(this, R.color.chartGridColor));
+        //.setmGridLabelsColor(ContextCompat.getColor(this, R.color.stats_background));
         leftAxis.setCenterAxisLabels(true);
-        leftAxis.setYOffset(35f);
+        leftAxis.setYOffset(15f);
         leftAxis.setXOffset(25f);
 
         ArrayList<BarEntry> entries = new ArrayList<>();

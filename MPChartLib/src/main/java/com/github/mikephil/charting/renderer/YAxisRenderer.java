@@ -150,13 +150,13 @@ public class YAxisRenderer extends AxisRenderer {
         Path path = new Path();
         mGridPaint.setColor(mYAxis.getGridColor());
 
-        path.moveTo(0, mViewPortHandler.offsetTop());
-        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.offsetTop());
+        path.moveTo(0, mViewPortHandler.getContentRect().top);
+        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().top);
         c.drawPath(path, mGridPaint);
         path.reset();
 
-        path.moveTo(0, mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom()/2 +1 );
-        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().height() + mViewPortHandler.offsetBottom()/2+1);
+        path.moveTo(0, mViewPortHandler.getContentRect().bottom);
+        path.lineTo(mViewPortHandler.contentLeft(), mViewPortHandler.getContentRect().bottom);
         c.drawPath(path, mGridPaint);
     }
 
