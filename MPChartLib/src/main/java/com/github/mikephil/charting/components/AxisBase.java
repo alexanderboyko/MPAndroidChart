@@ -229,7 +229,7 @@ public abstract class AxisBase extends ComponentBase {
         return mGridColor;
     }
 
-    public int getmGridLabelsColor() {
+    public int getGridLabelsColor() {
         return mGridLabelsColor;
     }
 

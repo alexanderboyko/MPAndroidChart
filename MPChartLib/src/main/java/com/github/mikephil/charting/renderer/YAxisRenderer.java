@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.util.Log;
 
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.YAxis;
@@ -127,7 +126,7 @@ public class YAxisRenderer extends AxisRenderer {
         }
         // draw
         Paint linesPaint = mGridPaint;
-        linesPaint.setColor(mYAxis.getmGridLabelsColor());
+        linesPaint.setColor(mYAxis.getGridLabelsColor());
 
         for (int i = from + 1; i < to - 1; i++) {
             String text = mYAxis.getFormattedLabel(i);

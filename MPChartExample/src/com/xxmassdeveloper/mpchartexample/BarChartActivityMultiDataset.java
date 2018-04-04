@@ -12,12 +12,14 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
@@ -129,6 +131,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         //todo change line color
         xAxis.setAxisLineColor(Color.GRAY);
         xAxis.setCenterAxisLabels(true);
+        xAxis.setValueFormatter((value, axis) -> String.valueOf(value));
         xAxis.setYOffset(20f);
         //todo set date dynamically
         xAxis.setDate("Apr 2018");
@@ -166,33 +169,32 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
 
         BarDataSet barDataSet = new BarDataSet(entries, "dfff");
         barDataSet.setHighlightEnabled(false);
+        barDataSet.setDrawValues(false);
         barDataSet.setColor(Color.RED);
         BarDataSet barDataSet1 = new BarDataSet(entries1, "dfff1");
         barDataSet1.setHighlightEnabled(false);
+        barDataSet1.setDrawValues(false);
         barDataSet1.setColor(Color.BLUE);
         BarDataSet barDataSet2 = new BarDataSet(entries2, "dfff2");
         barDataSet2.setHighlightEnabled(false);
+        barDataSet2.setDrawValues(false);
         barDataSet2.setColor(Color.GREEN);
 
         BarData barData = new BarData(barDataSet, barDataSet1, barDataSet2);
 
         mChart.setData(barData);
 
-        float groupSpace = 0.01f;
-        float barSpace = 0.03f; // x3 DataSet
-        float barWidth = 0.3f; // x3 DataSet
+        float groupSpace = 0.34f;
+        float barSpace = 0.07f; // x3 DataSet
+        float barWidth = 0.15f; // x3 DataSet
 
-        mChart.getBarData().groupBars(0, groupSpace, barSpace);
         mChart.getBarData().setBarWidth(barWidth);
+        xAxis.setAxisMinimum(0);
 
-        //mChart.getXAxis().setAxisMinimum(0);
-        //mChart.getXAxis().setAxisMaximum(0 + mChart.getBarData().getGroupWidth(groupSpace, barSpace) * 3);
-
-        mChart.notifyDataSetChanged();
-
-        mChart.setVisibleXRange(5f, 5f);
+        mChart.setVisibleXRange(4f, 5f);
         mChart.setVisibleYRangeMinimum(10f, YAxis.AxisDependency.LEFT);
         mChart.setVisibleYRangeMaximum(10f, YAxis.AxisDependency.LEFT);
+        mChart.getBarData().groupBars(0, groupSpace, barSpace);
         mChart.invalidate();
     }
 
