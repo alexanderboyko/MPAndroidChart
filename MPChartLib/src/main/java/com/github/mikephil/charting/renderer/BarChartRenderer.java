@@ -178,7 +178,6 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
     }
 
     private void drawRoundedRect(Canvas canvas, Paint paint, RectF rect) {
-        rect.top -=8f;
         canvas.drawRoundRect(rect, 10, 10, paint);
         canvas.drawRect(rect.left, rect.top + 10, rect.right, rect.bottom, paint);
     }
