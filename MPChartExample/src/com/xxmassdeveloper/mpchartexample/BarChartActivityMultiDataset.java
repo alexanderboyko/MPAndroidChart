@@ -202,7 +202,7 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         //leftAxis.setGridColor(ContextCompat.getColor(this, R.color.chartGridColor));
         //.setmGridLabelsColor(ContextCompat.getColor(this, R.color.stats_background));
         leftAxis.setCenterAxisLabels(true);
-        leftAxis.setYOffset(15f);
+        leftAxis.setYOffset(35f);
         leftAxis.setXOffset(25f);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
