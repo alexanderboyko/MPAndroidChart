@@ -382,6 +382,11 @@ public class LineChartRenderer extends LineRadarRenderer {
 
             e1 = dataSet.getEntryForIndex(mXBounds.min);
 
+            Paint paint = mDrawPaint;
+            paint.setStrokeWidth(5f);
+            paint.setColor(Color.GREEN);
+            c.drawLine(e1.getX(), mViewPortHandler.contentHeight(), e1.getX(), e1.getY(), mDrawPaint);
+
             if (e1 != null) {
 
                 int j = 0;
@@ -404,6 +409,8 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     mLineBuffer[j++] = e2.getX();
                     mLineBuffer[j++] = e2.getY() * phaseY;
+
+                    //c.drawLine(e1.getX(), 0, e1.getX(), e1.getY() * phaseY, mRenderPaint);
                 }
 
                 if (j > 0) {
@@ -576,8 +583,8 @@ public class LineChartRenderer extends LineRadarRenderer {
                         Utils.drawImage(
                                 c,
                                 icon,
-                                (int)(x + iconsOffset.x),
-                                (int)(y + iconsOffset.y),
+                                (int) (x + iconsOffset.x),
+                                (int) (y + iconsOffset.y),
                                 icon.getIntrinsicWidth(),
                                 icon.getIntrinsicHeight());
                     }
