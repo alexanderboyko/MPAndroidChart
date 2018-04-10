@@ -419,13 +419,15 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     final int size = Math.max((mXBounds.range + 1) * pointsPerEntryPair, pointsPerEntryPair) * 2;
 
-                    Paint linesPaint = mRenderPaint;
+                    Paint linesPaint = new Paint();
                     linesPaint.setColor(dataSet.getFillColor());
                     linesPaint.setStrokeWidth(2f);
+
                     for (int i = 0; i < mLineBuffer.length; i += 4) {
-                        c.drawLine(mLineBuffer[i + 2], mViewPortHandler.getContentRect().bottom, mLineBuffer[i + 2], mLineBuffer[i + 3], mRenderPaint);
+                        c.drawLine(mLineBuffer[i + 2], mViewPortHandler.getContentRect().bottom, mLineBuffer[i + 2], mLineBuffer[i + 3], linesPaint);
                     }
 
+                    mRenderPaint.setStrokeWidth(dataSet.getLineWidth());
                     mRenderPaint.setColor(dataSet.getColor());
                     canvas.drawLines(mLineBuffer, 0, size, mRenderPaint);
                 }

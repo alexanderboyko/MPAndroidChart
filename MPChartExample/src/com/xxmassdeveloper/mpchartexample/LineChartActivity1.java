@@ -145,7 +145,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
         set.setDrawFilled(true);
         set.setHighlightEnabled(false);
         set.setDrawValues(false);
-        set.setLineWidth(2.5f);
+        //set.setLineWidth(10f);
         //set.setColor(ContextCompat.getColor(presenter.getActivity().getApplicationContext(), R.color.rColorDark));
         //set.setCircleColor(ContextCompat.getColor(presenter.getActivity().getApplicationContext(), R.color.rColorDark));
         set.setCircleRadius(5f);
