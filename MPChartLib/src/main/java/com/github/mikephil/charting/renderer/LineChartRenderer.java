@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.charts.LineChart;
@@ -418,8 +419,14 @@ public class LineChartRenderer extends LineRadarRenderer {
 
                     final int size = Math.max((mXBounds.range + 1) * pointsPerEntryPair, pointsPerEntryPair) * 2;
 
-                    mRenderPaint.setColor(dataSet.getColor());
+                    Paint linesPaint = mRenderPaint;
+                    linesPaint.setColor(dataSet.getFillColor());
+                    linesPaint.setStrokeWidth(2f);
+                    for (int i = 0; i < mLineBuffer.length; i += 4) {
+                        c.drawLine(mLineBuffer[i + 2], mViewPortHandler.getContentRect().bottom, mLineBuffer[i + 2], mLineBuffer[i + 3], mRenderPaint);
+                    }
 
+                    mRenderPaint.setColor(dataSet.getColor());
                     canvas.drawLines(mLineBuffer, 0, size, mRenderPaint);
                 }
             }
